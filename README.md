@@ -15,3 +15,20 @@ Conventions that seem pretty useful for ghidra. Most of these are meant to:
 
 # Principles
 - Ideally, you want the decompiled code to look pretty close to c
+
+
+# How-to's
+## Identifying missing cross-references to a function
+Ghidra frequently misses cross references to functions if the reference is a pointer embedded in the data section of the binary. You can resolve this by searching for the packed version of the address in the "Search Memory" window. Remember to add 1 to your address if searching a function in thumb mode.
+![Search Memory](images/search_memory.png)
+![Search Memory Window](images/search_memory_window.png)
+
+## Identifying accesses to a structure's field across the binary (even if everything isn't typed correctly)
+It is common to want to identify all accesses to a specific field in a structure across a whole binary, but frequently the datatype for the structure has not been correctly set across the the whole binary yet. One way to try to bypass the process of correctly typing something everywhere is to directly search for the constant value of the field's offset in the structure.
+Searching this way can be accomplished using the "Scalar Search" feature.
+![Field offset](images/field_offset.png)
+![Scalar Search Nav](images/scalar_search_nav.png)
+![Scalar Search Window](images/scalar_search_window.png)
+
+Note that this method is actually searching the value embedded into instructions, so if the offset is too large to fit then the technique will not work very well.
+
